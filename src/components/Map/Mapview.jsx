@@ -3,7 +3,15 @@ import React, { useState } from 'react';
 import KakaoMap from './KakaoMap';
 import LocationButton from './LocationButton';
 
-const MapView = () => {
+const MapView = ({
+  showGreenMarker,
+  showYellowMarker,
+  selectedPlace,
+  onPublicDesignClick,
+  onPublicDesignSuggestionClick,
+  onSearchNearCurrentLocationClick,
+  submittedDesign
+}) => {
   const [clickedPosition, setClickedPosition] = useState(null);
 
   const handlePinClick = (position) => {
@@ -11,15 +19,20 @@ const MapView = () => {
   };
 
   return (
-    <div className="w-full h-full">
-      <LocationButton/>
-      <KakaoMap onMapClick={handlePinClick} />
-      
-      {/* <p className="text-center text-gray-500 mt-4">
-        {clickedPosition
-          ? `📍 위도: ${clickedPosition.lat}, 경도: ${clickedPosition.lng}`
-          : '지도를 클릭해 위치를 선택하세요'}
-      </p> */}
+    <div style={{ width: '100%', height: '100%' }}>
+      <LocationButton
+        onPublicDesignClick={onPublicDesignClick}
+        onPublicDesignSuggestionClick={onPublicDesignSuggestionClick}
+        onSearchNearCurrentLocationClick={onSearchNearCurrentLocationClick}
+        selectedPlace={selectedPlace}
+      />
+      <KakaoMap
+        onMapClick={handlePinClick}
+        showGreenMarker={showGreenMarker}
+        showYellowMarker={showYellowMarker}
+        selectedPlace={selectedPlace}
+        submittedDesign={submittedDesign}
+      />
     </div>
   );
 };
